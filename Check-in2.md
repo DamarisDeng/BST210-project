@@ -192,11 +192,11 @@ Here, we demonstrate this idea using CPN (neocortical projection neurons) and mi
 
   
 
-<img src="figures/q5-1b.png" alt="q5-1b" style="zoom:72%;" />
+<img src="figures/q5-1b.png" alt="q5-1b" style="zoom: 67%;" />
 
-<img src="figures/q5-1-table.png" alt="q5-1-table" style="zoom:60%;" />
+<img src="figures/q5-1-table.png" alt="q5-1-table" style="zoom: 33%;" />
 
-<img src="figures/q5-1a.png" alt="q5-1a" style="zoom:50%;" />
+<img src="figures/q5-1a.png" alt="q5-1a" style="zoom: 33%;" />
 
 
 
@@ -214,7 +214,7 @@ where $j=1, \dots, k$, $k$ is the number of brain regions, and $p$ is the number
 
 Here, we demonstrate this idea by fitting the **multinomial** regression using cells in one sample. Since the original dimensionality is too high, fitting the multinomial regression becomes impossible. To address this, we first selected 50 highly variable genes, and we limited our analysis to 3 brain regions *(CP: Cortical Plate, IZ: Intermediate Zone, Basal_tel: basal telencephalon)*. We set basal telencephalon as the reference group, and fitted two multinomial regression. The response level, fitted coefficient, p-value and adjusted p value are shown as follows. Positive coefficients mean that the expression of that gene increases the probability of belonging to certain regions. According to our domain knowledge in neuroscience, the results make sense. **Pdgfra** is a marker for oligodendrocyte precursor cells (OPCs). Positive associations suggest increased OPC presence in the CP and IZ, regions where myelination processes begin to occur during development. Somatostatin is a neuropeptide expressed by a subset of inhibitory interneurons in the brain. The negative coefficients indicate that higher expression of **Sst** is associated with a decreased likelihood of cells being in the CP and IZ regions. This suggests that somatostatin-expressing interneurons may be less prevalent or less active in these regions during the developmental stage studied.
 
-<img src="figures/q5-b-2.png" alt="q5-b-2" style="zoom:50%;" />
+<img src="figures/q5-b-2.png" alt="q5-b-2" style="zoom: 33%;" />
 
 #### c. Poisson and Extensions
 
@@ -285,11 +285,11 @@ $$
 
 The histogram illustrates the distribution of microglia counts near immature excitatory neurons across PBS and MIA conditions. Both conditions show a high concentration of zero counts, with similar distributions in non-zero values, reinforcing the statistical finding of no significant difference between conditions.
 
-![q5-c-3](figures/q5-c-3.jpg)
+<img src="figures/q5-c-3.jpg" alt="q5-c-3" style="zoom:33%;" />
 
 The rootogram for the Negative Binomial fit shows the distribution of microglia counts, with most values concentrated around zero. The observed values closely follow the expected frequencies, indicating that the Negative Binomial model fits well.
 
-<img src="figures/q5-c-1.jpg" alt="q5-c-1" style="zoom:50%;" />
+<img src="figures/q5-c-1.jpg" alt="q5-c-1" style="zoom: 33%;" />
 
 **Dispersion Test**:
 
