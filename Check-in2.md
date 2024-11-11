@@ -251,51 +251,220 @@ Where $Conditon_i=1$, when conditon = MIA, else 0.
     - Fit using `glm.nb()` from the MASS package.
 
 **Results from Poisson Model**
-$$
-\begin{align*}
-\text{Intercept} &= -3.34717 \quad (\text{p} < 2e-16) \\
-\text{Condition (MIA)} &= 0.03021 \quad (\text{p} = 0.151)
-\end{align*}
-$$
 
-- The estimated coefficient for `conditionMIA` is not statistically significant (p = 0.151).
-- The overdispersion test on the Poisson model returned a p-value < 2.2e-16, indicating significant overdispersion. This suggests that a Negative Binomial model is more appropriate for the data.
+**Summary Statistics**
 
-**Results from Negative Binomial Model**
-$$
-\begin{align*}
-\text{Intercept} &= -3.34717 \quad (\text{p} < 2e-16) \\
-\text{Condition (MIA)} &= 0.03021 \quad (\text{p} = 0.237)
-\end{align*}
-$$
+**Counts of Microglia near Immature ExN cells:**
 
-- The estimated coefficient for `conditionMIA` in the Negative Binomial model remains similar to the Poisson model but is not statistically significant (p = 0.237).
-- **Exponentiated Coefficients (Rate Ratios)**:
+```
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+0.00000 0.00000 0.00000 0.03575 0.00000 6.00000 
+```
 
-| Parameter         | Estimate | CI Lower | CI Upper |
-|-------------------|----------|----------|----------|
-| (Intercept)       | 0.03518  | 0.03392  | 0.03649  |
-| Condition (MIA)   | 1.03067  | 0.98038  | 1.08357  |
+- **Minimum Count:** 0
+- **Maximum Count:** 6
+- **Median and Quartiles:** All zeros, indicating that more than 75% of the observations have zero counts.
+- **Mean Count:** Approximately 0.036
+- **Interpretation:** The majority of Immature ExN cells have **no neighboring Microglia** within the specified radius.
 
-- **Interpretation**:
-    - The rate ratio for `conditionMIA` is 1.0307, indicating a 3.07% increase in microglia counts near immature excitatory neurons under the MIA condition.
-    - The 95% CI (0.9804, 1.0836) includes 1, confirming the lack of statistical significance.
+**Frequency of Counts:**
 
-**Diagnostic Analysis**
+```
+     0      1      2      3      4      5      6 
+246,792  6,122    850    237     91     21     14 
+```
 
-The histogram illustrates the distribution of microglia counts near immature excitatory neurons across PBS and MIA conditions. Both conditions show a high concentration of zero counts, with similar distributions in non-zero values, reinforcing the statistical finding of no significant difference between conditions.
+- **Total Observations:** 254,127
+- **Zero Counts:** 246,792 (97.11%)
+- **Non-Zero Counts:** 7,335 (2.89%)
+- **Interpretation:** The data is **highly zero-inflated**, with a small proportion of cells having any neighboring Microglia.
 
-<img src="figures/q5-c-3.jpg" alt="q5-c-3" style="zoom:33%;" />
+**Mean-Variance Comparison**
 
-The rootogram for the Negative Binomial fit shows the distribution of microglia counts, with most values concentrated around zero. The observed values closely follow the expected frequencies, indicating that the Negative Binomial model fits well.
+```
+Mean of Counts: 0.03575378 
+Variance of Counts: 0.05436335 
+```
 
-<img src="figures/q5-c-1.jpg" alt="q5-c-1" style="zoom: 33%;" />
+- **Mean:** ~0.036
+- **Variance:** ~0.054
+- **Interpretation:** The variance is slightly higher than the mean, suggesting **overdispersion**. In a Poisson distribution, the mean and variance are equal. Overdispersion indicates that the data may not fit a Poisson model well.
 
-**Dispersion Test**:
+**Goodness-of-Fit Test for Negative Binomial Distribution**
 
-- Dispersion test p-value of 0.122 indicates no significant overdispersion in the Negative Binomial model, further validating its suitability.
+```
+Goodness-of-fit test for nbinomial distribution
 
-In conclusion, negative binomial regression provides
+                  X^2 df     P(> X^2)
+Likelihood Ratio 75.89457  4 1.288787e-15
+```
+
+- **Chi-Squared Statistic:** 75.89457
+- **Degrees of Freedom:** 4
+- **P-value:** \(1.288787 \times 10^{-15}\)
+- **Interpretation:** The **significant p-value** indicates that the Negative Binomial distribution does **not** fit the data well. This suggests that even the Negative Binomial model may not be adequate due to the extreme zero-inflation.
+
+**Poisson Regression Model**
+
+**Model Output**
+
+```
+Call:
+glm(formula = count_A_near_B ~ condition, family = poisson, data = counts_df)
+
+Coefficients:
+             Estimate Std. Error  z value Pr(>|z|)    
+(Intercept)  -3.34717    0.01540 -217.386   <2e-16 ***
+conditionMIA  0.03021    0.02104    1.436    0.151    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+```
+
+- **Intercept (\( \beta_0 \)):** -3.34717
+  - Corresponds to the log of the expected count for the **PBS** condition.
+- **ConditionMIA (\( \beta_1 \)):** 0.03021
+  - Represents the difference in the log count between **MIA** and **PBS** conditions.
+- **P-value for ConditionMIA:** 0.151
+  - **Not statistically significant** at the 0.05 level.
+
+**Model Deviance and AIC**
+
+```
+Null deviance: 66100  on 254126  degrees of freedom
+Residual deviance: 66098  on 254125  degrees of freedom
+AIC: 81698
+```
+
+- **Null Deviance vs. Residual Deviance:** Minimal reduction, indicating that the predictor **does not significantly improve** the model.
+- **AIC (Akaike Information Criterion):** 81,698
+
+**Goodness-of-Fit Test**
+
+```
+Deviance: 66097.82 on 254125 degrees of freedom.
+Goodness-of-Fit Test p-value: 1 
+```
+
+- **P-value:** 1
+- **Interpretation:** A p-value of 1 suggests that the model's deviance is **less than or equal to** what would be expected under the null hypothesis. However, given the overdispersion detected later, this result may be misleading.
+
+**Overdispersion Test**
+
+```
+Overdispersion test
+
+data:  poisson_model
+z = 22.626, p-value < 2.2e-16
+alternative hypothesis: true dispersion is greater than 1
+sample estimates:
+dispersion 
+  1.519514 
+```
+
+- **Dispersion Parameter:** 1.519514 (greater than 1)
+- **Z-value:** 22.626
+- **P-value:** < 2.2e-16
+- **Interpretation:** The **significant overdispersion** indicates that the Poisson model is **not appropriate** for this data. The variance exceeds the mean, violating the Poisson assumption.
+
+**Negative Binomial Regression Model**
+
+**Model Output**
+
+```
+Call:
+glm.nb(formula = count_A_near_B ~ condition, data = counts_df, 
+    init.theta = 0.07545203964, link = log)
+
+Coefficients:
+             Estimate Std. Error  z value Pr(>|z|)    
+(Intercept)  -3.34717    0.01864 -179.523   <2e-16 ***
+conditionMIA  0.03021    0.02553    1.183    0.237    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+```
+
+- **Intercept (\( \beta_0 \)):** -3.34717
+- **ConditionMIA (\( \beta_1 \)):** 0.03021
+- **P-value for ConditionMIA:** 0.237
+  - **Not statistically significant**.
+
+**Model Deviance and AIC**
+
+```
+Null deviance: 31335  on 254126  degrees of freedom
+Residual deviance: 31333  on 254125  degrees of freedom
+AIC: 75269
+```
+
+- **Reduction in Deviance:** Minimal, suggesting that adding **condition** does not significantly improve the model.
+- **AIC:** 75,269 (lower than the Poisson model's AIC, indicating a better fit).
+
+**Negative Binomial Parameter (\( \theta \))**
+
+```
+Theta:  0.07545 
+Std. Err.:  0.00220 
+```
+
+- **Interpretation:** A small value of \( \theta \) indicates a high level of dispersion, which the Negative Binomial model accounts for.
+
+**Likelihood Ratio Test (Comparing Poisson and Negative Binomial Models)**
+
+```
+Likelihood ratio test
+
+Model 1: count_A_near_B ~ condition
+Model 2: count_A_near_B ~ condition
+  #Df LogLik Df  Chisq Pr(>Chisq)    
+1   2 -40847                         
+2   3 -37631  1 6431.3  < 2.2e-16 ***
+```
+
+- **Degrees of Freedom (Df):** Difference of 1
+- **Log-Likelihoods:** Improved from -40,847 (Poisson) to -37,631 (Negative Binomial)
+- **Chi-Squared Statistic:** 6,431.3
+- **P-value:** < 2.2e-16
+- **Interpretation:** The Negative Binomial model provides a **significantly better fit** than the Poisson model, justifying its use due to overdispersion in the data.
+
+
+**Key Findings**
+
+1. **High Zero Counts:** Over 97% of the observations have zero counts, indicating a **highly zero-inflated dataset**.
+   
+2. **Overdispersion Detected:** Both the mean-variance comparison and the overdispersion test confirm that the data is **overdispersed**, violating Poisson model assumptions.
+
+3. **Negative Binomial Model Fits Better:** The Negative Binomial model accounts for overdispersion and provides a **better fit** than the Poisson model, as evidenced by the lower AIC and significant likelihood ratio test.
+
+4. **Condition is Not Significant:**
+   - In both models, the effect of **condition (MIA vs. PBS)** on the counts of Microglia near Immature ExN cells is **not statistically significant**.
+   - **P-values for conditionMIA:** 
+     - Poisson model: 0.151
+     - Negative Binomial model: 0.237
+
+**Implications**
+
+- **Lack of Association:** There is **no significant evidence** to suggest that the **MIA condition** affects the number of Microglia near Immature ExN cells within the specified radius.
+  
+- **Model Appropriateness:** While the Negative Binomial model is more appropriate than the Poisson model for this data, the **extreme zero-inflation** may still pose challenges.
+
+- **Model Limitations:** The significant goodness-of-fit test for the Negative Binomial distribution indicates that even this model may not fully capture the data's characteristics.
+
+**Conclusion**
+
+- **Statistical Analysis:**
+  - The Negative Binomial regression model is preferred over the Poisson model due to overdispersion.
+  - The condition (MIA vs. PBS) does not have a significant effect on the counts.
+
+- **Biological Interpretation:**
+  - There is no statistical evidence to suggest that the MIA condition influences the proximity of Microglia to Immature ExN cells within the specified radius.
+
+- **Future Work:**
+  - Consider alternative models that handle zero-inflation.
+  - Investigate other potential factors or methods to better understand the data.
+
+---
+
+**Note:** The warnings about "NaNs produced" suggest potential computational issues, possibly due to the large number of zeros or model misspecification. It is advisable to check the data and model assumptions carefully.
 
 
 #### d. Survival Analysis
