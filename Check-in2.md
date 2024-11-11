@@ -12,9 +12,9 @@
 
 **Date:** November 10, 2024
 
-## Question 2
+### Question 2
 
-### a. Literature Review
+#### a. Literature Review
 
 Our group conducted a literature review to inform our project, focusing on research in neuroscience and spatial transcriptomics, particularly studies using the MERFISH technique. Similar questions have been explored, such as the relationship between biological sex, gene expression, and spatial cell distribution. In these studies, researchers frequently apply spatial regression models, generalized linear models, and various spatial statistics to investigate these associations.
 
@@ -40,7 +40,7 @@ Our approach builds on these insights by measuring the actual distance between c
 
 - Chennuru Vankadara, S., & von Luxburg, U. (2018), Distance-Preserving Generative Models for Spatial Transcriptomics.
 
-### b. Peer review
+#### b. Peer review
 
 We have received several constructive insights from our peers and the teaching team, which have been instrumental in refining the direction of our project. The feedback can be summarized as follows:
 
@@ -50,11 +50,11 @@ We have received several constructive insights from our peers and the teaching t
 
 3. **Biological Interpretation of Spatial Data:** Translating results into meaningful biological insights can be challenging. Advanced spatial statistics or domain-specific interpretations are needed to better understand the biological significance of cell distances and gene expression patterns.
 
-#### i.
+##### i.
 
 - **Yes**, the feedback provided by both our peers and the teaching team included insights that were directly viable for shaping the direction of our project.
 
-#### ii.
+##### ii.
 
 - We have responded to the feedback and made the following modifications:
 
@@ -66,11 +66,11 @@ We have received several constructive insights from our peers and the teaching t
    - **Primary Question:** Does the colocalization of two cell types of interest change under control versus diseased conditions? We will analyze 552 possible cell pairs (24 cell types).
    - **Secondary Question:** Does cell type enrichment vary across nine brain regions and between control and diseased states? This analysis involves assessing 24 cell types within each of the nine brain regions of interest.
 
-### c. Domain expertise
+#### c. Domain expertise
 
 **Yes**, we have contacted the domain expert, Dr. Brian Kalish (Boston Children’s Hospital), to seek guidance on interpreting the spatial distribution and colocalization patterns of the cell types under different conditions. Dr. Brian Kalish’s insights have been valuable in refining our approach to analyzing cell-type enrichment across brain regions and ensuring our methodological choices align with current best practices in spatial transcriptomics.
 
-## Question 3 Analysis Plan
+### Question 3 Analysis Plan
 
 1. **Calculate the Density Factor $d_i$**  
    For each tissue sample $i$, compute the density factor by taking the mean of all nearest-neighbor distances $d_{ij}$ between each cell pair $j$:
@@ -145,9 +145,9 @@ We have received several constructive insights from our peers and the teaching t
     Analyze the significant rate ratios and their confidence intervals to draw conclusions about how experimental conditions affect the spatial relationships between different cell types.
 
 
-## Question 4 Missing Data
+### Question 4 Missing Data
 
-### a. Type of missingness
+#### a. Type of missingness
 
 The source of data is MERFISH (Multiplexed Error-Robust Fluorescence In Situ Hybridization), which is highly effective at mitigating issues of missing data in the gene expression matrix. MERFISH is designed with robust error-correction capabilities that correct barcode errors by assigning ambiguous barcodes to their closest valid match. This approach significantly reduces the likelihood of missing gene expression data. Thus, our dataset does not exhibit missing data in the gene expression matrix.
 
@@ -157,13 +157,13 @@ MERFISH data also provides spatial coordinates for each cell, enabling us to con
 Due to the inherent strengths of the MERFISH technology in error correction and spatial localization, there is no need to handle missing data in this project. We can proceed with our analysis with confidence that the dataset is complete and reliable for both gene expression and spatial location information.
 
 
-### b. Steps to Address Missing Data
+#### b. Steps to Address Missing Data
 
 Given that our dataset is generated from MERFISH, which includes robust error-correction capabilities that virtually eliminate missing gene expression data and provide complete spatial coordinates, no missing data imputation or exclusion is necessary. Consequently, we have not implemented any missing data handling procedures in our analysis.
 
-## Question 5 Modeling
+### Question 5 Modeling
 
-### a. Linear, flexible/additive, or other methods (LASSO, ridge)
+#### a. Linear, flexible/additive, or other methods (LASSO, ridge)
 
 Our analysis plan does not include this type of model, therefore we figure out a way apply these models.
 
@@ -200,7 +200,7 @@ Here, we demonstrate this idea using CPN (neocortical projection neurons) and mi
 
 
 
-### b. Logistic, multinomial, ordinal, generalized ordinal
+#### b. Logistic, multinomial, ordinal, generalized ordinal
 
 Our primary analysis does not include this type of model. We can use brain region as $Y$ and gene expression as $X$ to fit a multinomial regression.
 
@@ -216,7 +216,7 @@ Here, we demonstrate this idea by fitting the **multinomial** regression using c
 
 <img src="figures/q5-b-2.png" alt="q5-b-2" style="zoom:50%;" />
 
-### c. Poisson and Extensions
+#### c. Poisson and Extensions
 
 In this analysis, we examine whether experimental conditions (control vs. diseased) impact the spatial proximity between one example cell pairs: microglia cells (cell type A) and immature excitatory neurons (cell type B). Specifically, we model the counts of microglia cells within a certain radius of each immature excitatory neuron using Poisson and Negative Binomial regression.
 
@@ -298,16 +298,16 @@ The rootogram for the Negative Binomial fit shows the distribution of microglia 
 In conclusion, negative binomial regression provides
 
 
-### d. Survival Analysis
+#### d. Survival Analysis
 
 **Response:**
 We will not incorporate survival analysis into our project as our data don’t warrant it. Our research questions do not involve time-to-event data, which is the focus of survival analysis methods. In survival analysis, the interest is typically in modeling the time until an event occurs (e.g., death, disease onset), with censoring of incomplete observations. However, our study centers around spatial transcriptomics data, focusing on cell-type co-localization and enrichment rather than any temporal component. Thus, survival analysis is not applicable to our data and research objectives.
 
 
 
-## Question 6 Abstract and Introduction
+### Question 6 Abstract and Introduction
 
-### a. Abstract
+#### a. Abstract
 
 **Title:** Spatial Characterization of Cell Pair Proximity Across Brain Regions Using Spatial Transcriptomics and Statistical Modeling
 
@@ -327,7 +327,7 @@ Statistical significance of the condition effect on cell pair proximities was as
 **Keywords:**  
 Spatial Transcriptomics, Brain Regions, Cell Type Proximity, Poisson Distribution, Negative Binomial Distribution, Cellular Interactions, Neuroinflammation
 
-### b. Introduction
+#### b. Introduction
 
 **Background:**  
 The arrangement and interactions of various cell types in the brain are essential for maintaining neural function and homeostasis. Spatial organization within brain regions affects everything from synaptic connectivity to immune responses. Alterations in the spatial proximity of cell types under different conditions, especially during disease states, could reveal important aspects of cellular behavior, intercellular communication, and tissue response to pathology.
@@ -352,7 +352,7 @@ With approximately 148,111 cells and several samples across the conditions, this
 **Motivation for Analysis:**  
 Characterizing changes in cellular spatial relationships across brain regions is crucial for understanding neurodevelopment and disease mechanisms. Shifts in the proximity of specific cell pairs could indicate changes in cell communication or infiltration patterns, potentially highlighting processes like neuroinflammation or synaptic remodeling. This study aims to provide quantitative insights into these spatial dynamics using a comprehensive approach that examines all cell type pairs.
 
-### c. Research and Analysis Methods
+#### c. Research and Analysis Methods
 
 **Overview:**  
 Our analytical approach consists of two primary components. First, we aim to quantify the proximity between all possible cell type pairs across different brain regions, that is, to measure how frequently cells of one type are located near cells of another type in each brain region. To do this, we calculate a biologically meaningful radius based on the mean nearest-neighbor distance and then apply Negative Binomial regression model to assess if proximity counts differ significantly between disease and control conditions.
@@ -379,7 +379,7 @@ The second component involves testing for condition-specific proximity shifts ac
 
 - **Discussion:** Here, we will interpret our results in the context of existing literature, explore potential biological mechanisms underlying observed proximity shifts, and suggest directions for future research.
 
-## Question 7
+### Question 7
 
 
 **YES**
