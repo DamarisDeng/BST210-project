@@ -301,7 +301,7 @@ Likelihood Ratio 75.89457  4 1.288787e-15
 
 - **Chi-Squared Statistic:** 75.89457
 - **Degrees of Freedom:** 4
-- **P-value:** \(1.288787 \times 10^{-15}\)
+- **P-value:** $1.288787 \times 10^{-15}
 - **Interpretation:** The **significant p-value** indicates that the Negative Binomial distribution does **not** fit the data well. This suggests that even the Negative Binomial model may not be adequate due to the extreme zero-inflation.
 
 **Poisson Regression Model**
@@ -320,9 +320,9 @@ conditionMIA  0.03021    0.02104    1.436    0.151
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 ```
 
-- **Intercept (\( \beta_0 \)):** -3.34717
+- **Intercept $\beta_0$:** -3.34717
   - Corresponds to the log of the expected count for the **PBS** condition.
-- **ConditionMIA (\( \beta_1 \)):** 0.03021
+- **ConditionMIA $\beta_1$:** 0.03021
   - Represents the difference in the log count between **MIA** and **PBS** conditions.
 - **P-value for ConditionMIA:** 0.151
   - **Not statistically significant** at the 0.05 level.
@@ -383,8 +383,8 @@ conditionMIA  0.03021    0.02553    1.183    0.237
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 ```
 
-- **Intercept (\( \beta_0 \)):** -3.34717
-- **ConditionMIA (\( \beta_1 \)):** 0.03021
+- **Intercept ($\beta_0$ \):** -3.34717
+- **ConditionMIA ($\beta_1$):** 0.03021
 - **P-value for ConditionMIA:** 0.237
   - **Not statistically significant**.
 
@@ -399,14 +399,14 @@ AIC: 75269
 - **Reduction in Deviance:** Minimal, suggesting that adding **condition** does not significantly improve the model.
 - **AIC:** 75,269 (lower than the Poisson model's AIC, indicating a better fit).
 
-**Negative Binomial Parameter (\( \theta \))**
+**Negative Binomial Parameter $\theta$**
 
 ```
 Theta:  0.07545 
 Std. Err.:  0.00220 
 ```
 
-- **Interpretation:** A small value of \( \theta \) indicates a high level of dispersion, which the Negative Binomial model accounts for.
+- **Interpretation:** A small value of $\theta$ indicates a high level of dispersion, which the Negative Binomial model accounts for.
 
 **Likelihood Ratio Test (Comparing Poisson and Negative Binomial Models)**
 
